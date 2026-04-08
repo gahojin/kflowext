@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "jp.co.gahojin.kflowext"
-version = "2026.4.0"
+version = "2026.4.1"
 
 kotlin {
     jvm()
