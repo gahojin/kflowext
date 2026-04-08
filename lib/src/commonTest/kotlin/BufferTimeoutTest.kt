@@ -1,14 +1,19 @@
 package jp.co.gahojin.kflowext
 
+import io.kotest.common.testTimeSource
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.TestTimeSource
 
 class BufferTimeoutTest : StringSpec({
+    coroutineTestScope = true
+
     "サイズ上限または時間経過でバッファを出力すること" {
+        val timeSource = testTimeSource()
         val maxTime = 100.milliseconds
         val maxSize = 3
 
@@ -26,8 +31,9 @@ class BufferTimeoutTest : StringSpec({
         }
 
         val result = inputFlow.bufferTimeout(
-            maxSize = maxSize,
             maxTime = maxTime,
+            maxSize = maxSize,
+            timeSource = timeSource,
         ).toList()
 
         result shouldBe listOf(

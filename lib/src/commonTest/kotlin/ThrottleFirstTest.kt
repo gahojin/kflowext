@@ -1,7 +1,10 @@
 package jp.co.gahojin.kflowext
 
+import io.kotest.common.testCoroutineSchedulerOrNull
+import io.kotest.common.testTimeSource
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.toList
@@ -9,7 +12,11 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.TestTimeSource
 
 class ThrottleFirstTest : StringSpec({
+    coroutineTestScope = true
+
     "指定された期間内のイベントを間引くこと" {
+        println(currentCoroutineContext().testCoroutineSchedulerOrNull)
+        val timeSource = testTimeSource()
         val period = 100.milliseconds
 
         val inputFlow = flow {
@@ -29,7 +36,7 @@ class ThrottleFirstTest : StringSpec({
         }
 
         // 実行
-        val result = inputFlow.throttleFirst(period).toList()
+        val result = inputFlow.throttleFirst(period, timeSource).toList()
 
         // 検証
         result shouldBe listOf("A", "C", "E")
