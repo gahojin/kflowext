@@ -5,8 +5,11 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
+import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TestTimeSource
 
 class BufferTimeoutTest : StringSpec({
@@ -27,7 +30,9 @@ class BufferTimeoutTest : StringSpec({
             emit(4)
             delay(150.milliseconds) // 100msを超過したため、[4]が出力
             emit(5)
-            // クローズされるため、[5]が出力
+            delay(1.seconds) // 長時間経過、[5]が出力
+            emit(6)
+            // クローズされるため、[6]が出力
         }
 
         val result = inputFlow.bufferTimeout(
@@ -40,6 +45,7 @@ class BufferTimeoutTest : StringSpec({
             listOf(1, 2, 3),
             listOf(4),
             listOf(5),
+            listOf(6),
         )
     }
 })

@@ -24,7 +24,7 @@ kotlin {
     android {
         namespace = group.toString()
         compileSdk = 36
-        minSdk = 24
+        minSdk = 23
 
         withJava()
         withHostTestBuilder {}.configure {}
