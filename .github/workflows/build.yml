@@ -69,4 +69,4 @@ jobs:
           dependency-graph: generate-and-submit
 
       - name: Build with Gradle
-        run: ./gradlew ${{ matrix.target }}
+        run: ./gradlew apiCheck detekt ${{ matrix.target }}
