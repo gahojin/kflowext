@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.dokka) apply false
     alias(libs.plugins.kotest) apply false
     alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.kotlinx.binary.compatibility.validator) apply false
     alias(libs.plugins.kotlinx.kover) apply false
     alias(libs.plugins.google.devtools.ksp) apply false
     alias(libs.plugins.maven.publish) apply false
