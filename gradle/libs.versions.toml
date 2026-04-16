@@ -2,7 +2,13 @@
 
 [versions]
 
-android-gradle-plugin = "9.1.0"
+java = "11"
+
+android-min-sdk = "23"
+
+android-compile-sdk = "36"
+
+android-gradle-plugin = "9.1.1"
 
 detekt = "2.0.0-alpha.2"
 
