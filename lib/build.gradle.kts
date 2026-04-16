@@ -17,6 +17,7 @@ plugins {
     id("signing")
 }
 
+val artifactId = "kflowext"
 group = "jp.co.gahojin.kflowext"
 version = "2026.4.1"
 
@@ -24,8 +25,8 @@ kotlin {
     jvm()
     android {
         namespace = group.toString()
-        compileSdk = 36
-        minSdk = 23
+        compileSdk = libs.versions.android.compile.sdk.get().toInt()
+        minSdk = libs.versions.android.min.sdk.get().toInt()
 
         withJava()
         withHostTestBuilder {}.configure {}
@@ -34,7 +35,7 @@ kotlin {
         }
 
         compilerOptions {
-            jvmTarget = JvmTarget.JVM_11
+            jvmTarget = JvmTarget.fromTarget(libs.versions.java.get())
         }
 
         packaging {
@@ -101,10 +102,10 @@ mavenPublishing {
         signAllPublications()
     }
 
-    coordinates(group.toString(), "kflowext", version.toString())
+    coordinates(group.toString(), artifactId, version.toString())
 
     pom {
-        name ="kflowext"
+        name = artifactId
         description = "Kotlin Flow Extension Library"
         url = "https://github.com/gahojin/kflowext/"
         licenses {
