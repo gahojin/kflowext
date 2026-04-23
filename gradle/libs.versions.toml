@@ -14,7 +14,7 @@ detekt = "2.0.0-alpha.2"
 
 dokka = "2.2.0"
 
-google-devtools-ksp = "2.3.6"
+google-devtools-ksp = "2.3.7"
 
 kotest = "6.1.11"
 
