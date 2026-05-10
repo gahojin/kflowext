@@ -8,7 +8,7 @@ android-min-sdk = "23"
 
 android-compile-sdk = "36"
 
-android-gradle-plugin = "9.1.1"
+android-gradle-plugin = "9.2.1"
 
 detekt = "2.0.0-alpha.3"
 
@@ -22,7 +22,7 @@ kotlin = "2.3.21"
 
 kotlinx-binary-compatibility-validator = "0.18.1"
 
-kotlinx-coroutines = "1.10.2"
+kotlinx-coroutines = "1.11.0"
 
 kover = "0.9.8"
 
