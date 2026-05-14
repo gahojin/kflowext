@@ -3,16 +3,20 @@ name: Publish
 on:
   workflow_dispatch:
   release:
-    types: [released, prereleased]
+    types:
+      - published
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   publish:
     name: Release build and publish
+    if: github.repository == 'gahojin/kflowext'
     timeout-minutes: 30
     runs-on: macOS-latest
+
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout
