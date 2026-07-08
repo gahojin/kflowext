@@ -40,6 +40,7 @@ kotlin {
 
         packaging {
             resources.pickFirsts.add("META-INF/AL2.0")
+            resources.pickFirsts.add("META-INF/LGPL2.1")
         }
     }
     iosArm64()
