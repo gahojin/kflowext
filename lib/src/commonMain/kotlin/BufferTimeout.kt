@@ -19,41 +19,55 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.TimeSource
 
 /**
- * 受信した値をバッファに収集し、バッファが最大サイズに達するか、またはmaxTimeが経過するたびに、バッファを返すオペレータ.
+ * 受信した値をバッファに収集し、バッファが最大サイズに達するか、または [maxTimeMillis] が経過するたびに、バッファを返すオペレータ.
+ *
+ * @param maxTimeMillis バッファを放出するまでの最大時間（ミリ秒）
+ * @param maxSize バッファの最大サイズ
  */
 fun <T> Flow<T>.bufferTimeout(maxTimeMillis: Long, maxSize: Int = Int.MAX_VALUE): Flow<List<T>> {
+    require(maxTimeMillis > 0) { "maxTimeMillis must be positive" }
+    require(maxSize > 0) { "maxSize must be positive" }
     return bufferTimeout(maxTimeMillis.milliseconds, maxSize, TimeSource.Monotonic)
 }
 
 /**
- * 受信した値をバッファに収集し、バッファが最大サイズに達するか、またはmaxTimeが経過するたびに、バッファを返すオペレータ.
+ * 受信した値をバッファに収集し、バッファが最大サイズに達するか、または [maxTime] が経過するたびに、バッファを返すオペレータ.
+ *
+ * @param maxTime バッファを放出するまでの最大時間
+ * @param maxSize バッファの最大サイズ
  */
-fun <T> Flow<T>.bufferTimeout(maxTime: Duration, maxSize: Int = Int.MAX_VALUE) = bufferTimeout(maxTime, maxSize, TimeSource.Monotonic)
+fun <T> Flow<T>.bufferTimeout(maxTime: Duration, maxSize: Int = Int.MAX_VALUE): Flow<List<T>> {
+    require(maxTime.isPositive()) { "maxTime must be positive" }
+    require(maxSize > 0) { "maxSize must be positive" }
+    return bufferTimeout(maxTime, maxSize, TimeSource.Monotonic)
+}
 
 @OptIn(ExperimentalCoroutinesApi::class)
-internal fun <T> Flow<T>.bufferTimeout(maxTime: Duration, maxSize: Int = Int.MAX_VALUE, timeSource: TimeSource) = channelFlow {
-    val buffer = mutableListOf<T>()
+internal fun <T> Flow<T>.bufferTimeout(
+    maxTime: Duration,
+    maxSize: Int = Int.MAX_VALUE,
+    timeSource: TimeSource,
+): Flow<List<T>> = channelFlow {
+    var buffer = mutableListOf<T>()
     val upstream = produceIn(this)
 
     var deadline = timeSource.markNow() + maxTime
 
     suspend fun flush() {
         if (buffer.isNotEmpty()) {
-            send(buffer.toList())
-            buffer.clear()
+            val toSend = buffer
+            buffer = mutableListOf()
+            send(toSend)
         }
-        // deadlineが現在時刻より未来になるまで加算する
-        while (deadline.hasPassedNow()) {
-            deadline += maxTime
-        }
+        deadline = timeSource.markNow() + maxTime
     }
 
     var isRunning = true
     while (isRunning) {
-        val remaining = deadline.elapsedNow()
+        val remaining = (-deadline.elapsedNow()).coerceAtLeast(Duration.ZERO)
 
-        select {
-            onTimeout(remaining.unaryMinus()) {
+        select<Unit> {
+            onTimeout(remaining) {
                 flush()
             }
             upstream.onReceiveCatching { result ->
@@ -64,9 +78,11 @@ internal fun <T> Flow<T>.bufferTimeout(maxTime: Duration, maxSize: Int = Int.MAX
                             flush()
                         }
                     }
-                    .onClosed {
-                        it?.also { throw it }
-                        flush()
+                    .onClosed { cause ->
+                        cause?.let { throw it }
+                        if (buffer.isNotEmpty()) {
+                            send(buffer)
+                        }
                         isRunning = false
                     }
             }
