@@ -14,17 +14,17 @@ detekt = "2.0.0-alpha.5"
 
 dokka = "2.2.0"
 
-google-devtools-ksp = "2.3.9"
+google-devtools-ksp = "2.3.10"
 
-kotest = "6.2.1"
+kotest = "6.2.3"
 
-kotlin = "2.4.0"
+kotlin = "2.4.10"
 
 kotlinx-binary-compatibility-validator = "0.18.1"
 
 kotlinx-coroutines = "1.11.0"
 
-kover = "0.9.8"
+kover = "0.9.9"
 
 maven-publish = "0.37.0"
 
