@@ -59,6 +59,6 @@ jobs:
           dependency-graph: generate-and-submit
 
       - name: Build with Gradle
-        run: ./gradlew apiCheck detekt $TARGET
+        run: ./gradlew checkKotlinAbi detekt $TARGET
         env:
           TARGET: ${{ matrix.target }}

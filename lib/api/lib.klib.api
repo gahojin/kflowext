@@ -1,0 +1,12 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, linuxX64, macosArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <jp.co.gahojin.kflowext:lib>
+final fun <#A: kotlin/Any?> (kotlinx.coroutines.flow/Flow<#A>).jp.co.gahojin.kflowext/bufferTimeout(kotlin.time/Duration, kotlin/Int = ...): kotlinx.coroutines.flow/Flow<kotlin.collections/List<#A>> // jp.co.gahojin.kflowext/bufferTimeout|bufferTimeout@kotlinx.coroutines.flow.Flow<0:0>(kotlin.time.Duration;kotlin.Int){0§<kotlin.Any?>}[0]
+final fun <#A: kotlin/Any?> (kotlinx.coroutines.flow/Flow<#A>).jp.co.gahojin.kflowext/bufferTimeout(kotlin/Long, kotlin/Int = ...): kotlinx.coroutines.flow/Flow<kotlin.collections/List<#A>> // jp.co.gahojin.kflowext/bufferTimeout|bufferTimeout@kotlinx.coroutines.flow.Flow<0:0>(kotlin.Long;kotlin.Int){0§<kotlin.Any?>}[0]
+final fun <#A: kotlin/Any?> (kotlinx.coroutines.flow/Flow<#A>).jp.co.gahojin.kflowext/throttleFirst(kotlin.time/Duration): kotlinx.coroutines.flow/Flow<#A> // jp.co.gahojin.kflowext/throttleFirst|throttleFirst@kotlinx.coroutines.flow.Flow<0:0>(kotlin.time.Duration){0§<kotlin.Any?>}[0]
+final fun <#A: kotlin/Any?> (kotlinx.coroutines.flow/Flow<#A>).jp.co.gahojin.kflowext/throttleFirst(kotlin/Long): kotlinx.coroutines.flow/Flow<#A> // jp.co.gahojin.kflowext/throttleFirst|throttleFirst@kotlinx.coroutines.flow.Flow<0:0>(kotlin.Long){0§<kotlin.Any?>}[0]
