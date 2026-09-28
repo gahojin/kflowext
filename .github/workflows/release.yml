@@ -30,7 +30,7 @@ jobs:
       - name: Verify tag matches project version
         run: |
           TAG_VERSION="${GITHUB_REF_NAME#v}"
-          FILE_VERSION=$(grep -m1 '^version = ' plugin-build/plugin/build.gradle.kts | sed -E 's/version = "(.*)"/\1/')
+          FILE_VERSION=$(grep -m1 '^version = ' lib/build.gradle.kts | sed -E 's/version = "(.*)"/\1/')
           if [ "$TAG_VERSION" != "$FILE_VERSION" ]; then
             echo "::error::Tag version ($TAG_VERSION) does not match build.gradle.kts version ($FILE_VERSION)"
             exit 1
