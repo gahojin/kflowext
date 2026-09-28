@@ -20,8 +20,6 @@ kotest = "6.2.5"
 
 kotlin = "2.4.20"
 
-kotlinx-binary-compatibility-validator = "0.18.2"
-
 kotlinx-coroutines = "1.11.0"
 
 kover = "0.9.9"
@@ -55,8 +53,6 @@ google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "google-de
 kotest = { id = "io.kotest", version.ref = "kotest" }
 
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-
-kotlinx-binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinx-binary-compatibility-validator" }
 
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 
