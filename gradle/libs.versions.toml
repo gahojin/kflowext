@@ -8,7 +8,7 @@ android-min-sdk = "23"
 
 android-compile-sdk = "37"
 
-android-gradle-plugin = "9.4.1"
+android-gradle-plugin = "9.5.0"
 
 detekt = "2.0.0-alpha.6"
 
@@ -16,13 +16,13 @@ dokka = "2.3.0-Beta"
 
 google-devtools-ksp = "2.3.12"
 
-kotest = "6.2.5"
+kotest = "6.2.6"
 
-kotlin = "2.4.20"
+kotlin = "2.4.21"
 
 kotlinx-coroutines = "1.11.0"
 
-kover = "0.9.9"
+kover = "0.9.11"
 
 maven-publish = "0.37.0"
 
